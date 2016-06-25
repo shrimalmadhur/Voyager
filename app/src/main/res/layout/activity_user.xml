@@ -7,10 +7,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.angelhack.voyager.UserActivity">
+    tools:context="com.angelhack.voyager.UserActivity"
+    android:orientation="vertical"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="@string/create_tour"
+        android:layout_alignBaseline="@+id/select_tour"
+        android:layout_alignBottom="@+id/select_tour"
+        android:layout_alignParentStart="true"
+        android:id="@+id/create_tour"
+        android:onClick="createTour"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_tour"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/select_tour"
+        android:onClick="selectTour"/>
 </RelativeLayout>
