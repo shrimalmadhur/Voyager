@@ -314,6 +314,20 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
 
     @Override
     public void onFABProgressAnimationEnd() {
+        final Intent intent = new Intent(this, PublishTour.class);
+        Thread timerThread = new Thread() {
+            public void run() {
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+
+                    startActivity(intent);
+                }
+            }
+        };
+        timerThread.start();
         Log.i(TAG, "clicked");
     }
 
@@ -343,9 +357,10 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
             public void onClick(View v) {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    setText("Stop recording");
+//                    setText("Stop recording");
                 } else {
                     setText("Start recording");
+                    setBackground(getDrawable(R.drawable.microphone));
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -354,6 +369,7 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
         public RecordButton(Context ctx) {
             super(ctx);
             setText("Start recording");
+            setBackground(getDrawable(R.drawable.microphone));
             setOnClickListener(clicker);
         }
     }
@@ -365,9 +381,11 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
             public void onClick(View v) {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    setText("Stop playing");
+//                    setText("Stop playing");
+                    setBackground(getDrawable(R.drawable.pause));
                 } else {
-                    setText("Start playing");
+//                    setText("Start playing");
+                    setBackground(getDrawable(R.drawable.play));
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -375,7 +393,8 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
 
         public PlayButton(Context ctx) {
             super(ctx);
-            setText("Start playing");
+//            setText("Start playing");
+            setBackground(getDrawable(R.drawable.play));
             setOnClickListener(clicker);
         }
     }

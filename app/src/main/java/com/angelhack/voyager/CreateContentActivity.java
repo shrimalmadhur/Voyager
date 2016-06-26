@@ -367,7 +367,7 @@ public class CreateContentActivity extends AppCompatActivity implements FABProgr
                    // mRecordButton.setIm
 //                    setText("Stop recording");
                 } else {
-                    setBackground(getDrawable(R.drawable.record));
+                    setBackground(getDrawable(R.drawable.microphone));
 //                    setText("Start recording");
                 }
                 mStartRecording = !mStartRecording;

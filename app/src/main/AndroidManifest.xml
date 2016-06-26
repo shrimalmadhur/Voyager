@@ -24,6 +24,7 @@
         <activity android:name=".CreateContentActivity" />
         <activity android:name=".SecondDestination"></activity>
         <activity android:name=".MapActivity"></activity>
+        <activity android:name=".PublishTour"></activity>
     </application>
 
 
