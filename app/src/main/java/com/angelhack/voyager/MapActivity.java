@@ -1,9 +1,14 @@
 package com.angelhack.voyager;
 
+import android.content.Context;
 import android.content.SyncStatusObserver;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.MapView;
@@ -17,13 +22,16 @@ import com.esri.core.map.Graphic;
 import com.esri.core.symbol.SimpleLineSymbol;
 import com.esri.core.symbol.SimpleMarkerSymbol;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MapActivity extends AppCompatActivity {
     MapView mMapView;
     GraphicsLayer graphicsLayer;
-
-
+    private PlayButton   mPlayButton = null;
+    private MediaPlayer mPlayer = null;
+    private static final String LOG_TAG = "AudioRecordTest";
+    private static String mFileName = null;
 
     final OnSingleTapListener mapTapCallback = new OnSingleTapListener() {
         @Override
@@ -134,5 +142,52 @@ public class MapActivity extends AppCompatActivity {
         Graphic lineGraphic = new Graphic(geometryLine, lineSymbol);
         // add the graphic to the graphics layer
         graphicsLayer.addGraphic(lineGraphic);
+    }
+
+    class PlayButton extends Button {
+        boolean mStartPlaying = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setBackground(getDrawable(R.drawable.stop));
+                } else {
+                    setBackground(getDrawable(R.drawable.play));
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
+
+        public PlayButton(Context ctx) {
+            super(ctx);
+//            setText("Start playing");
+            setBackground(getDrawable(R.drawable.play));
+            setOnClickListener(clicker);
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void startPlaying() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(mFileName);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "prepare() failed");
+        }
+    }
+
+    private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
     }
 }

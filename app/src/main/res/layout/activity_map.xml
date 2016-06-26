@@ -10,7 +10,7 @@
         android:id="@+id/map"
         mapoptions.MapType="Streets"
         mapoptions.ZoomLevel="12"
-        mapoptions.center="37.82, -122.51"
+        mapoptions.center="37.87, -122.51"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="50"></com.esri.android.map.MapView>
@@ -29,45 +29,39 @@
             android:text="Hello"
             android:textSize="30dp" />
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="70"
+            android:src="@drawable/camera_icon_final"
+            />
+
         <LinearLayout
             android:id="@+id/details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="90"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/image"
+            <TextView
+                android:id="@+id/description"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/camera_icon" />
+                android:layout_height="wrap_content"
+                android:layout_weight="80"
+                android:text="The place is very good." />
 
-            <LinearLayout
+
+            <Button
+                android:id="@+id/play"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="90"
-                    android:text="The place is very good."
-                    />
-
-                <Button
-                    android:id="@+id/play"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10"
-                    android:text="Play Audio"
-                     />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:text="Play" />
 
         </LinearLayout>
+
+
     </LinearLayout>
 
 
