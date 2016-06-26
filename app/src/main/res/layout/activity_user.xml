@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/black"
     tools:context="com.angelhack.voyager.UserActivity">
 
     <Button
@@ -12,7 +13,6 @@
         android:layout_height="300dp"
         android:layout_alignBaseline="@+id/select_tour"
         android:layout_alignBottom="@+id/select_tour"
-        android:layout_marginTop="130dp"
         android:onClick="createTour"
         android:textSize="30dp"
         android:background="@drawable/bg1"
