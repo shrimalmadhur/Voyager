@@ -15,6 +15,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -61,6 +62,26 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
 
     private FABProgressCircle fabProgressCircle;
     private boolean taskRunning;
+
+    TextView timerTextView;
+    long startTime = 0;
+
+    //runs without a timer by reposting this handler at the end of the runnable
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            timerTextView.setText(String.format("%d:%02d", minutes, seconds));
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
 
 
     @Override
@@ -358,8 +379,27 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
                 onRecord(mStartRecording);
                 if (mStartRecording) {
 //                    setText("Stop recording");
+//                    Log.i(TAG, timerTextView.toString());
+//                    if(timerTextView == null) {
+//                        timerTextView = new TextView(getApplicationContext());
+//                        RelativeLayout.LayoutParams r2 = new RelativeLayout.LayoutParams(
+//                                ViewGroup.LayoutParams.WRAP_CONTENT,
+//                                ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        r2.addRule(RelativeLayout.RIGHT_OF, mPlayButton.getId());
+//                        RelativeLayout ll = (RelativeLayout) findViewById(R.id.contentView);
+//                        ll.addView(timerTextView, r2);
+//                        setContentView(ll);
+//                        startTime = System.currentTimeMillis();
+//                        timerHandler.postDelayed(timerRunnable, 0);
+//                    } else {
+//                        startTime = System.currentTimeMillis();
+//                        timerHandler.postDelayed(timerRunnable, 0);
+//                    }
+                    Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_SHORT).show();
                 } else {
 //                    setText("Start recording");
+//                    timerHandler.removeCallbacks(timerRunnable);
+                    Toast.makeText(getApplicationContext(), "Recording Stoped", Toast.LENGTH_SHORT).show();
                     setBackground(getDrawable(R.drawable.microphone));
                 }
                 mStartRecording = !mStartRecording;

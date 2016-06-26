@@ -44,41 +44,41 @@
         android:text="Interests"
         android:id="@+id/textView3" />
 
-    <CheckBox android:id="@+id/checkbox_meat"
+    <CheckBox android:id="@+id/checkbox_hiking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hiking"
-        android:onClick="onCheckboxClicked"/>
+        />
 
-    <CheckBox android:id="@+id/checkbox_cheese"
+    <CheckBox android:id="@+id/checkbox_beach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Beach"
-        android:onClick="onCheckboxClicked"/>
+        />
 
     <CheckBox android:id="@+id/checkbox_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Photography"
-        android:onClick="onCheckboxClicked"/>
+        />
 
     <CheckBox android:id="@+id/checkbox_art"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Art"
-        android:onClick="onCheckboxClicked"/>
+        />
 
     <CheckBox android:id="@+id/checkbox_sports"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Water activities"
-        android:onClick="onCheckboxClicked"/>
+        />
 
     <CheckBox android:id="@+id/checkbox_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Architecture"
-        android:onClick="onCheckboxClicked"/>
+        />
 
     <Button
         android:layout_width="wrap_content"

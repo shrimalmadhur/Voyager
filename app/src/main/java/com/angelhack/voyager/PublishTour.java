@@ -1,5 +1,6 @@
 package com.angelhack.voyager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.plumillonforge.android.chipview.*;
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ public class PublishTour extends AppCompatActivity implements Chip{
     private int mType = 0;
 
     public PublishTour(){
-        
+
     }
 
     public PublishTour(String name, int type) {
@@ -49,14 +52,20 @@ public class PublishTour extends AppCompatActivity implements Chip{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_tour);
-        List<Chip> chipList = new ArrayList<>();
-        chipList.add(new PublishTour("Lorem"));
-        chipList.add(new PublishTour("Ipsum dolor"));
-        chipList.add(new PublishTour("Sit amet"));
-        chipList.add(new PublishTour("Consectetur"));
-        chipList.add(new PublishTour("adipiscing elit"));
-        ChipView chipDefault = (ChipView) findViewById(R.id.chipview);
-        chipDefault.setChipList(chipList);
+//        List<Chip> chipList = new ArrayList<>();
+//        chipList.add(new PublishTour("Lorem"));
+//        chipList.add(new PublishTour("Ipsum dolor"));
+//        chipList.add(new PublishTour("Sit amet"));
+//        chipList.add(new PublishTour("Consectetur"));
+//        chipList.add(new PublishTour("adipiscing elit"));
+//        ChipView chipDefault = (ChipView) findViewById(R.id.chipview);
+//        chipDefault.setChipList(chipList);
+    }
+
+    public void publishTour(View view) {
+        Toast.makeText(this, "Tour published", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
     }
 
 
