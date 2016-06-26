@@ -3,6 +3,7 @@ package com.angelhack.voyager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -276,18 +277,19 @@ public class MapActivity extends AppCompatActivity {
     }
 
     private void startPlaying() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(mFileName);
-            mPlayer.prepare();
+        mPlayer = MediaPlayer.create(this, R.raw.mount_t);
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//            mPlayer.prepare();
             mPlayer.start();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
-        }
+
     }
 
     private void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
+    }
+
+    public void playSong(View view) {
+        startPlaying();
     }
 }
