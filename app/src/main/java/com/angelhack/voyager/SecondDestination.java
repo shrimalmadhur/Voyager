@@ -31,12 +31,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.angelhack.voyager.util.MockAction;
+import com.angelhack.voyager.util.MockActionCallback;
+import com.angelhack.voyager.util.ThreadExecutor;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.github.jorgecastilloprz.listeners.FABProgressListener;
 
 import java.io.IOException;
 
-public class SecondDestination extends AppCompatActivity implements FABProgressListener {
+public class SecondDestination extends AppCompatActivity implements FABProgressListener, MockActionCallback {
     final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     private Toolbar toolbar;
@@ -68,7 +71,8 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
 //        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
 //        setSupportActionBar(toolbar);
         CameraActivity = this;
-
+        initViews();
+        attachListeners();
 //            imageDetails = (TextView) findViewById(R.id.imageDetails);
 
         showImg = (ImageView) findViewById(R.id.showImg);
@@ -295,9 +299,22 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
+    private void runMockInteractor() {
+        ThreadExecutor executor = new ThreadExecutor();
+        executor.run(new MockAction(this));
+        taskRunning = true;
+    }
+
+    @Override
+    public void onMockActionComplete() {
+        taskRunning = false;
+        fabProgressCircle.beginFinalAnimation();
+        //fabProgressCircle.hide();
+    }
+
     @Override
     public void onFABProgressAnimationEnd() {
-
+        Log.i(TAG, "clicked");
     }
 
     private void initViews() {
@@ -312,7 +329,7 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
             public void onClick(View view) {
                 if (!taskRunning) {
                     fabProgressCircle.show();
-//                    runMockInteractor();
+                    runMockInteractor();
                 }
             }
         });
