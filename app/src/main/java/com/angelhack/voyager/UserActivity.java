@@ -1,8 +1,10 @@
 package com.angelhack.voyager;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -15,7 +17,8 @@ public class UserActivity extends AppCompatActivity {
 
     // Create content Activity goes here
     public void createTour(View view) {
-
+        Intent intent = new Intent(this, CreateContentActivity.class);
+        startActivity(intent);
     }
 
     // select a tour Activity goes here
