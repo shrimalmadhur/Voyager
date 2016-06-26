@@ -25,6 +25,7 @@
         <activity android:name=".SecondDestination"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".PublishTour"></activity>
+        <activity android:name=".UserInterestsActivity"></activity>
     </application>
 
 

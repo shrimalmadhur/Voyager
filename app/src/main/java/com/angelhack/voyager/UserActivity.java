@@ -22,7 +22,7 @@ public class UserActivity extends AppCompatActivity {
 
     // select a tour Activity goes here
     public void selectTour(View view){
-        Intent intent = new Intent(this, MapActivity.class);
+        Intent intent = new Intent(this, UserInterestsActivity.class);
         startActivity(intent);
     }
 }
