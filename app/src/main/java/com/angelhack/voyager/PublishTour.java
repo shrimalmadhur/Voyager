@@ -11,16 +11,54 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import com.plumillonforge.android.chipview.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
-public class PublishTour extends AppCompatActivity {
+public class PublishTour extends AppCompatActivity implements Chip{
+
+    private String mName;
+    private int mType = 0;
+
+    public PublishTour(){
+        
+    }
+
+    public PublishTour(String name, int type) {
+        this(name);
+        mType = type;
+    }
+
+    public PublishTour(String name) {
+        mName = name;
+    }
+
+    @Override
+    public String getText() {
+        return mName;
+    }
+
+    public int getType() {
+        return mType;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_publish_tour);
+        setContentView(R.layout.activity_publish_tour);
+        List<Chip> chipList = new ArrayList<>();
+        chipList.add(new PublishTour("Lorem"));
+        chipList.add(new PublishTour("Ipsum dolor"));
+        chipList.add(new PublishTour("Sit amet"));
+        chipList.add(new PublishTour("Consectetur"));
+        chipList.add(new PublishTour("adipiscing elit"));
+        ChipView chipDefault = (ChipView) findViewById(R.id.chipview);
+        chipDefault.setChipList(chipList);
     }
+
+
 }
 
