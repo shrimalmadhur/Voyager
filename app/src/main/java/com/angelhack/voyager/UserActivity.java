@@ -14,7 +14,6 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
     }
 
-
     // Create content Activity goes here
     public void createTour(View view) {
         Intent intent = new Intent(this, CreateContentActivity.class);
@@ -23,6 +22,7 @@ public class UserActivity extends AppCompatActivity {
 
     // select a tour Activity goes here
     public void selectTour(View view){
-
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
     }
 }
