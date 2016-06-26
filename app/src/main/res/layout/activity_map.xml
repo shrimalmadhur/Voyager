@@ -26,20 +26,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:layout_margin="5dp"
             android:text="Hello"
+            android:gravity="center"
+            android:background="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:textSize="30dp" />
 
         <ImageView
             android:id="@+id/imagePlace"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="70" />
+            android:layout_height="100dp"
+            android:padding="2dp"
+            android:layout_weight="80" />
 
         <LinearLayout
             android:id="@+id/details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="70"
+            android:layout_weight="20"
             android:orientation="horizontal">
 
             <TextView
@@ -47,6 +52,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="80"
+                android:padding="2dp"
+                android:layout_gravity="center_vertical|center"
                 android:text="The place is very good." />
 
 
