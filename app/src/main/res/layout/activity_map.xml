@@ -30,12 +30,10 @@
             android:textSize="30dp" />
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/imagePlace"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="70"
-            android:src="@drawable/camera_icon_final"
-            />
+            android:layout_height="130dp"
+            android:layout_weight="70" />
 
         <LinearLayout
             android:id="@+id/details"
