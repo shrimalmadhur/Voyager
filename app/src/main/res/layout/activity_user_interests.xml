@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.angelhack.voyager.UserInterestsActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location"
+        android:hint="San Francisco"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
+        android:text="Location"
+        android:id="@+id/textView"
+        android:layout_weight="0.08" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Language"
+        android:id="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/land"
+        android:hint="English"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Interests"
+        android:id="@+id/textView3" />
+
+    <CheckBox android:id="@+id/checkbox_meat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hiking"
+        android:onClick="onCheckboxClicked"/>
+
+    <CheckBox android:id="@+id/checkbox_cheese"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beach"
+        android:onClick="onCheckboxClicked"/>
+
+    <CheckBox android:id="@+id/checkbox_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photography"
+        android:onClick="onCheckboxClicked"/>
+
+    <CheckBox android:id="@+id/checkbox_art"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Art"
+        android:onClick="onCheckboxClicked"/>
+
+    <CheckBox android:id="@+id/checkbox_sports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Water activities"
+        android:onClick="onCheckboxClicked"/>
+
+    <CheckBox android:id="@+id/checkbox_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Architecture"
+        android:onClick="onCheckboxClicked"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See Tours"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/seeTours"
+        android:onClick="openMap"/>
+
+
+</LinearLayout>

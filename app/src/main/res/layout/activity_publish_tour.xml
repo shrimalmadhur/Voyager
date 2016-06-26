@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tourtitle"
+        android:layout_gravity="center_horizontal"
+        android:hint="Tour Text"
+        android:layout_weight="0.13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:id="@+id/description"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.13"
+        android:textSize="25dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/tourdescription"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.48" />
+
+    <com.plumillonforge.android.chipview.ChipView
+        android:id="@+id/chipview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

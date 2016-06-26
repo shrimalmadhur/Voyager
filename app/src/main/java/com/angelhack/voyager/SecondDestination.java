@@ -116,8 +116,8 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
         mRecordButton.setId(View.generateViewId());
 
         RelativeLayout.LayoutParams r1 = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+                120,
+                120);
 
         r1.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
 
@@ -125,8 +125,8 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
                 r1);
         mPlayButton = new PlayButton(this);
         RelativeLayout.LayoutParams r2 = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+                120,
+                120);
 
         r2.addRule(RelativeLayout.RIGHT_OF, mRecordButton.getId());
         r2.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
@@ -359,7 +359,7 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
                 if (mStartRecording) {
 //                    setText("Stop recording");
                 } else {
-                    setText("Start recording");
+//                    setText("Start recording");
                     setBackground(getDrawable(R.drawable.microphone));
                 }
                 mStartRecording = !mStartRecording;
@@ -368,7 +368,7 @@ public class SecondDestination extends AppCompatActivity implements FABProgressL
 
         public RecordButton(Context ctx) {
             super(ctx);
-            setText("Start recording");
+//            setText("Start recording");
             setBackground(getDrawable(R.drawable.microphone));
             setOnClickListener(clicker);
         }

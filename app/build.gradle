@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.esri.arcgis.android:arcgis-android:10.2.8'
     compile 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
+    compile 'com.github.Plumillon:ChipView:1.2.0'
 }
