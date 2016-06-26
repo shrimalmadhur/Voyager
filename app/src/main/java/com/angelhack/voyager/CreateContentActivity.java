@@ -27,13 +27,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.jorgecastilloprz.FABProgressCircle;
+import com.github.jorgecastilloprz.listeners.FABProgressListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class CreateContentActivity extends AppCompatActivity {
+public class CreateContentActivity extends AppCompatActivity implements FABProgressListener {
     final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     private Toolbar toolbar;
@@ -53,6 +57,9 @@ public class CreateContentActivity extends AppCompatActivity {
     private PlayButton   mPlayButton = null;
     private MediaPlayer mPlayer = null;
 
+    private FABProgressCircle fabProgressCircle;
+    private boolean taskRunning;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,10 @@ public class CreateContentActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);
         CameraActivity = this;
+
+
+        // FAB Listener
+        initViews();
 
 //            imageDetails = (TextView) findViewById(R.id.imageDetails);
 
@@ -110,19 +121,30 @@ public class CreateContentActivity extends AppCompatActivity {
         });
 
 //        LinearLayout ll = new LinearLayout(this);
-        LinearLayout ll = (LinearLayout) findViewById(R.id.contentView);
+        RelativeLayout ll = (RelativeLayout) findViewById(R.id.contentView);
         mRecordButton = new RecordButton(this);
+
+        ll.setId(View.generateViewId());
+        mRecordButton.setId(View.generateViewId());
+
+        RelativeLayout.LayoutParams r1 = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        r1.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
+
         ll.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+                r1);
         mPlayButton = new PlayButton(this);
-        ll.addView(mPlayButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+        RelativeLayout.LayoutParams r2 = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        r2.addRule(RelativeLayout.RIGHT_OF, mRecordButton.getId());
+        r2.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
+
+
+        ll.addView(mPlayButton, r2);
         setContentView(ll);
     }
 
@@ -285,6 +307,29 @@ public class CreateContentActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onFABProgressAnimationEnd() {
+
+    }
+
+    private void initViews() {
+        fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
+    }
+
+    private void attachListeners() {
+        fabProgressCircle.attachListener(this);
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!taskRunning) {
+                    fabProgressCircle.show();
+//                    runMockInteractor();
+                }
+            }
+        });
     }
 
     class RecordButton extends Button {

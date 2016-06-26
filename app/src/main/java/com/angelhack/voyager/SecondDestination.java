@@ -27,12 +27,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.jorgecastilloprz.FABProgressCircle;
+import com.github.jorgecastilloprz.listeners.FABProgressListener;
+
 import java.io.IOException;
 
-public class SecondDestination extends AppCompatActivity {
+public class SecondDestination extends AppCompatActivity implements FABProgressListener {
     final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     private Toolbar toolbar;
@@ -51,6 +55,9 @@ public class SecondDestination extends AppCompatActivity {
 
     private PlayButton   mPlayButton = null;
     private MediaPlayer mPlayer = null;
+
+    private FABProgressCircle fabProgressCircle;
+    private boolean taskRunning;
 
 
     @Override
@@ -98,19 +105,30 @@ public class SecondDestination extends AppCompatActivity {
         });
 
 //        LinearLayout ll = new LinearLayout(this);
-        LinearLayout ll = (LinearLayout) findViewById(R.id.contentView);
+        RelativeLayout ll = (RelativeLayout) findViewById(R.id.contentView);
         mRecordButton = new RecordButton(this);
+
+        ll.setId(View.generateViewId());
+        mRecordButton.setId(View.generateViewId());
+
+        RelativeLayout.LayoutParams r1 = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        r1.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
+
         ll.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+                r1);
         mPlayButton = new PlayButton(this);
-        ll.addView(mPlayButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+        RelativeLayout.LayoutParams r2 = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        r2.addRule(RelativeLayout.RIGHT_OF, mRecordButton.getId());
+        r2.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
+
+
+        ll.addView(mPlayButton, r2);
         setContentView(ll);
     }
 
@@ -254,7 +272,7 @@ public class SecondDestination extends AppCompatActivity {
 
         // Define the file-name to save photo taken by Camera activity
         Log.i(TAG, "I am runnning");
-        String fileName = "Camera_Example.jpg";
+        String fileName = "Camera_Example_2.jpg";
 
         // Create parameters for Intent with filename
         ContentValues values = new ContentValues();
@@ -276,6 +294,30 @@ public class SecondDestination extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
+
+    @Override
+    public void onFABProgressAnimationEnd() {
+
+    }
+
+    private void initViews() {
+        fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
+    }
+
+    private void attachListeners() {
+        fabProgressCircle.attachListener(this);
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!taskRunning) {
+                    fabProgressCircle.show();
+//                    runMockInteractor();
+                }
+            }
+        });
+    }
+
 
     class RecordButton extends Button {
         boolean mStartRecording = true;
@@ -377,7 +419,7 @@ public class SecondDestination extends AppCompatActivity {
 
     public SecondDestination() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/audiorecordtest.3gp";
+        mFileName += "/audiorecordtest_2.3gp";
     }
 
     /**
