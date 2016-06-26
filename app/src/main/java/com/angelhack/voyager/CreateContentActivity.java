@@ -91,6 +91,7 @@ public class CreateContentActivity extends AppCompatActivity implements FABProgr
 
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(CreateContentActivity.this, SecondDestination.class);
                 startActivity(intent);
             }
