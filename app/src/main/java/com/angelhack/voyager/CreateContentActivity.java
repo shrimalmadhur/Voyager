@@ -10,6 +10,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Picture;
+import android.graphics.drawable.PictureDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -20,6 +24,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -27,13 +32,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.angelhack.voyager.util.MockAction;
+import com.angelhack.voyager.util.MockActionCallback;
+import com.angelhack.voyager.util.ThreadExecutor;
+import com.github.jorgecastilloprz.FABProgressCircle;
+import com.github.jorgecastilloprz.listeners.FABProgressListener;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class CreateContentActivity extends AppCompatActivity {
+public class CreateContentActivity extends AppCompatActivity implements FABProgressListener, MockActionCallback {
     final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     private Toolbar toolbar;
@@ -53,6 +66,9 @@ public class CreateContentActivity extends AppCompatActivity {
     private PlayButton   mPlayButton = null;
     private MediaPlayer mPlayer = null;
 
+    private FABProgressCircle fabProgressCircle;
+    private boolean taskRunning;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +79,10 @@ public class CreateContentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         CameraActivity = this;
 
+
+        // FAB Listener
+        initViews();
+        attachListeners();
 //            imageDetails = (TextView) findViewById(R.id.imageDetails);
 
 
@@ -110,19 +130,30 @@ public class CreateContentActivity extends AppCompatActivity {
         });
 
 //        LinearLayout ll = new LinearLayout(this);
-        LinearLayout ll = (LinearLayout) findViewById(R.id.contentView);
+        RelativeLayout ll = (RelativeLayout) findViewById(R.id.contentView);
         mRecordButton = new RecordButton(this);
+
+        ll.setId(View.generateViewId());
+        mRecordButton.setId(View.generateViewId());
+
+        RelativeLayout.LayoutParams r1 = new RelativeLayout.LayoutParams(
+                120,
+                120);
+
+        r1.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
+
         ll.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+                r1);
         mPlayButton = new PlayButton(this);
-        ll.addView(mPlayButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+        RelativeLayout.LayoutParams r2 = new RelativeLayout.LayoutParams(
+                120,
+                120);
+
+        r2.addRule(RelativeLayout.RIGHT_OF, mRecordButton.getId());
+        r2.addRule(RelativeLayout.BELOW, R.id.titleLinearLayout);
+
+
+        ll.addView(mPlayButton, r2);
         setContentView(ll);
     }
 
@@ -287,6 +318,45 @@ public class CreateContentActivity extends AppCompatActivity {
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
 
+    private void runMockInteractor() {
+        ThreadExecutor executor = new ThreadExecutor();
+        executor.run(new MockAction(this));
+        taskRunning = true;
+    }
+
+    @Override
+    public void onMockActionComplete() {
+        taskRunning = false;
+        fabProgressCircle.beginFinalAnimation();
+        //fabProgressCircle.hide();
+    }
+
+
+
+    private void initViews() {
+        fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
+
+    }
+
+    private void attachListeners() {
+        fabProgressCircle.attachListener(this);
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!taskRunning) {
+                    fabProgressCircle.show();
+                    runMockInteractor();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onFABProgressAnimationEnd() {
+        Log.i(TAG, "clicked");
+    }
+
     class RecordButton extends Button {
         boolean mStartRecording = true;
 
@@ -294,9 +364,11 @@ public class CreateContentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    setText("Stop recording");
+                   // mRecordButton.setIm
+//                    setText("Stop recording");
                 } else {
-                    setText("Start recording");
+                    setBackground(getDrawable(R.drawable.microphone));
+//                    setText("Start recording");
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -304,7 +376,8 @@ public class CreateContentActivity extends AppCompatActivity {
 
         public RecordButton(Context ctx) {
             super(ctx);
-            setText("Start recording");
+//            setText("Start recording");
+            setBackground(getDrawable(R.drawable.microphone));
             setOnClickListener(clicker);
         }
     }
@@ -316,9 +389,9 @@ public class CreateContentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    setText("Stop playing");
+                    setBackground(getDrawable(R.drawable.stop));
                 } else {
-                    setText("Start playing");
+                    setBackground(getDrawable(R.drawable.play));
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -326,7 +399,8 @@ public class CreateContentActivity extends AppCompatActivity {
 
         public PlayButton(Context ctx) {
             super(ctx);
-            setText("Start playing");
+//            setText("Start playing");
+            setBackground(getDrawable(R.drawable.play));
             setOnClickListener(clicker);
         }
     }
